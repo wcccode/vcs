@@ -100,7 +100,7 @@ func (e *vcsError) Error() string {
 		return e.s
 	}
 
-	return fmt.Sprintf("%s: %v", e.s, e.e)
+	return fmt.Sprintf("%s: %v, %v", e.s, e.e, e.o)
 }
 
 // Original retrieves the underlying implementation specific error.

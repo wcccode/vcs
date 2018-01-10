@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 	"time"
@@ -46,6 +47,10 @@ func NewSvnRepo(remote, local string) (*SvnRepo, error) {
 		if err != nil {
 			return nil, NewLocalError("Unable to retrieve local repo information", err, string(out))
 		}
+		// fixed spec char bug
+		reg := regexp.MustCompile("[\n\r ]")
+		detectedRemote = reg.ReplaceAllString(detectedRemote, "")
+
 		if detectedRemote != "" && remote != "" && detectedRemote != remote {
 			return nil, ErrWrongRemote
 		}
